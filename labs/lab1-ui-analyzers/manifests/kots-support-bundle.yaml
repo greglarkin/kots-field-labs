@@ -1,7 +1,7 @@
 apiVersion: troubleshoot.sh/v1beta2
 kind: SupportBundle
 metadata:
-  name: lab1e2
+  name: lab1e1
 spec:
   collectors:
     - logs:
@@ -18,7 +18,7 @@ spec:
         - stat
         - -c
         - "%a"
-        - /etc/lab1-e2/config.txt
+        - /etc/lab1/config.txt
   analyzers:
     - textAnalyze:
         checkName: Config Check
@@ -26,6 +26,7 @@ spec:
         regex: '400'
         outcomes:
           - pass:
-              message: Found properly-restricted file at /etc/lab1-e2/config.txt
+              message: Found properly-restricted file at /etc/lab1/config.txt
           - fail:
-              message: Could not find a file at /etc/lab1-e2/config.txt with 400 permissions -- please ensure this file exists with any content
+              message: Could not find a file at /etc/lab1/config.txt with 400 permissions -- please ensure this file exists with any content
+

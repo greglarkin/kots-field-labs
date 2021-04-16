@@ -20,10 +20,23 @@ spec:
             - /bin/sh
             - -ec
             - |
-              perms=$(stat -c "%a" /etc/lab1-e1/config.txt)
+              perms=$(stat -c "%a" /etc/lab2/config.txt)
               if [ "$perms" -ne "400" ]; then echo missing config; exit 1; fi
+              echo "found config.txt"
           volumeMounts:
-            - mountPath: /etc/lab1-e1
+            - mountPath: /etc/lab2
+              name: lab1-config
+        - name: check-secret-file
+          image: busybox
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              perms=$(stat -c "%a" /etc/lab2/secretkey.txt)
+              if [ "$perms" -ne "400" ]; then echo "missing /etc/lab2/secretkey.txt"; exit 1; fi
+              echo "found secretkey.txt"
+          volumeMounts:
+            - mountPath: /etc/lab2
               name: lab1-config
       containers:
         - name: nginx
@@ -41,7 +54,7 @@ spec:
       volumes:
         - name: lab1-config
           hostPath:
-            path: /etc/lab1-e1/
+            path: /etc/lab2/
         - name: html
           configMap:
             name: nginx-html

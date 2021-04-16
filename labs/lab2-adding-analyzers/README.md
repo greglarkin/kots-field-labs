@@ -2,7 +2,7 @@ Lab 1.2: Support Analyzers
 =========================================
 
 
-**NOTE** to complete this lab, you will need to ensure you've set `REPLICATED_APP` and `REPLICATED_API_TOKEN` as you did in [Lab 1 Exercise 0](../lab1-e0-hello-world) to add an analyzer.
+**NOTE** to complete this lab, you will need to ensure you've set `REPLICATED_APP` and `REPLICATED_API_TOKEN` as you did in [Lab 1 Exercise 0](../lab0-hello-world) to add an analyzer.
 If you haven't completed Exercise 0, you should go back and do that now.
 It will take **15-30 minutes**.
 
@@ -18,7 +18,7 @@ Before you start, it's worth noting that this server already has the `config.txt
 node before you start to verify
 
 ```shell
-ls -l /etc/lab1-e2/
+ls -l /etc/lab2/
 ```
 
 You should see a properly-restricted file in place, so we won't need to worry about putting it in place.
@@ -118,7 +118,7 @@ More importantly, if we review the logs for the nginx pod, we can see that the
 ![check-secret-file](img/check-secret-file.png)
 
 ```text
-stat: can't stat '/etc/lab1-e2/secretkey.txt': No such file or directory
+stat: can't stat '/etc/lab2/secretkey.txt': No such file or directory
 ```
 
 It appears our initContainer relies on this file to proceed.
@@ -138,8 +138,8 @@ To correct the issue, let's address the problem we uncovered in the init contain
 As with many infrastructure problems, now that we have diagnosed the issue, the fix is relatively simple.
 
 ```text
-sudo touch /etc/lab1-e2/secretkey.txt
-sudo chmod 400 /etc/lab1-e2/secretkey.txt
+sudo touch /etc/lab2/secretkey.txt
+sudo chmod 400 /etc/lab2/secretkey.txt
 ```
 
 </details>
@@ -163,10 +163,10 @@ Any time you find yourself using logs to debug something, as did just now you sh
 > 
 > How can I present valuable diagnostic information directly to my customer, in the case that they're unable to send logs out of the environment?
 
-So before we move on to the next issue, let's take some time to build and test an analyzer that will check for the existence of this `/etc/lab1-e2/secretkey.txt`
+So before we move on to the next issue, let's take some time to build and test an analyzer that will check for the existence of this `/etc/lab2/secretkey.txt`
 as part of support bundle collection.
 
-**NOTE** you will need to ensure you've set `REPLICATED_APP` and `REPLICATED_API_TOKEN` as you did in [Lab 1 Exercise 0](../lab1-e0-hello-world) to add an analyzer.
+**NOTE** you will need to ensure you've set `REPLICATED_APP` and `REPLICATED_API_TOKEN` as you did in [Lab 1 Exercise 0](../lab0-hello-world) to add an analyzer.
 If you haven't completed Exercise 0, you should go back and do that now. 
 It will take **15-30 minutes**.
 
@@ -174,7 +174,7 @@ Open up a shell on your workstation wherever you have the `kots-field-labs` repo
 and cd into the Lab 1.2 directory.
 
 ```shell
-cd lab1-kots/lab1-e2-adding-analyzers
+cd labs/lab2-adding-analyzers
 ```
 
 The files we care about are in the `manifests` directory, most importantly, `kots-support-bundle.yaml`.
@@ -184,10 +184,10 @@ and the [regex analyzer](https://troubleshoot.sh/docs/analyze/regex/).
 
 ![troubleshoot-sh-docs](./img/troubleshoot-sh-docs.png)
 
-Using the files there and the troubleshoot docs, add a collector + analyzer to check for the existence of /etc/lab1-e2/secretkey.txt
+Using the files there and the troubleshoot docs, add a collector + analyzer to check for the existence of /etc/lab2/secretkey.txt
 and fail with a helpful error message if it's not there.
 
-Make changes to your yaml, then run `make release` from the `lab1-e2-adding-analyzers` directory to create a new release.
+Make changes to your yaml, then run `make release` from the `lab2-adding-analyzers` directory to create a new release.
 Test your changes by navigating to your KOTS UI's Version History tab, checking for updates, 
 deploying the new version, collecting another support bundle, and reviewing the analyzers.
 
@@ -222,7 +222,7 @@ spec:
           - stat
           - -c
           - "%a"
-          - /etc/lab1-e2/config.txt
+          - /etc/lab2/config.txt
     - exec:
         name: check-secret
         collectorName: check-secret
@@ -233,7 +233,7 @@ spec:
           - stat
           - -c
           - "%a"
-          - /etc/lab1-e2/secretkey.txt
+          - /etc/lab2/secretkey.txt
   analyzers:
     - textAnalyze:
         checkName: Config Check
@@ -241,18 +241,18 @@ spec:
         regex: '400'
         outcomes:
           - pass:
-              message: Found properly-restricted file at /etc/lab1-e2/config.txt
+              message: Found properly-restricted file at /etc/lab2/config.txt
           - fail:
-              message: Could not find a file at /etc/lab1-e2/config.txt with 400 permissions -- please ensure this file exists with any content
+              message: Could not find a file at /etc/lab2/config.txt with 400 permissions -- please ensure this file exists with any content
     - textAnalyze:
         checkName: Secret Check
         fileName: check-secret/{{repl Namespace}}/*/check-secret-*.txt
         regex: '400'
         outcomes:
           - pass:
-              message: Found properly-restricted file at /etc/lab1-e2/secretkey.txt
+              message: Found properly-restricted file at /etc/lab2/secretkey.txt
           - fail:
-              message: Could not find a file at /etc/lab1-e2/secretkey.txt with 400 permissions -- please ensure this file exists with any content
+              message: Could not find a file at /etc/lab2/secretkey.txt with 400 permissions -- please ensure this file exists with any content
 
 
 ```

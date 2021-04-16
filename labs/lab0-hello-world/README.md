@@ -12,7 +12,7 @@ To start, you'll want to clone this repo somewhere. Optionally, you can fork it 
 
 ```shell script
 git clone git@github.com:replicatedhq/kots-field-labs
-cd kots-field-labs/lab1-kots/lab1-e0-hello-world
+cd kots-field-labs/labs/lab0-hello-world
 ```
 
 #### Install CLI

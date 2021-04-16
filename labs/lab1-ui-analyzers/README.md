@@ -4,7 +4,7 @@ Lab 1.1: Using Support Analyzers
 In this lab, we'll use the Support Bundle analyzers feature to debug an application, modifying the host in order to create the correct conditions for the application to start. In this case, the app is already deployed, but something is not quite right. The Status Informers show "Unavailable".
 
 
-![lab1-e1-kots-ui-unavailable](img/lab1-e1-kots-ui-unavailable.png)
+![lab1-kots-ui-unavailable](img/lab1-kots-ui-unavailable.png)
 
 You can open the KOTS admin console your your node by navigating to https://$IP_ADDRESS:8800 in a browser. The password to your instance will be provided as part of the lab, or you can reset by SSHing the node and running
 
@@ -33,18 +33,18 @@ Once the bundle is collected, you should see an informative error message in the
 ![failing-check](img/failing-check.png)
 
 
-> Could not find a file at /etc/lab1-e1/config.txt with 400 permissions -- please ensure this file exists with any content
+> Could not find a file at /etc/lab1/config.txt with 400 permissions -- please ensure this file exists with any content
 
 ### Correcting
 
-In order to correct this issue, you'll need to SSH your node and add this file. Assuming your environment is called `train-gmiller`, you'll want to ssh the IP for `train-gmiller-lab1-e1-ui-analyzers`.
+In order to correct this issue, you'll need to SSH your node and add this file. Assuming your environment is called `train-gmiller`, you'll want to ssh the IP for `train-gmiller-lab1-ui-analyzers`.
 
 <details>
   <summary>Expand for shell commands</summary>
 
 ```
-sudo touch /etc/lab1-e1/config.txt
-sudo chmod 400 /etc/lab1-e1/config.txt
+sudo touch /etc/lab1/config.txt
+sudo chmod 400 /etc/lab1/config.txt
 ```
 </details>
 

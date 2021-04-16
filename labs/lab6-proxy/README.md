@@ -5,7 +5,7 @@ In this lab, we'll explore doing a
 
 ### Instance Overview
 
-As in [Lab 1.5](../lab1-e5-airgap), You will have received the IP of a jump box and the name of an airgapped server.
+As in [Lab 1.5](../lab5-airgap), You will have received the IP of a jump box and the name of an airgapped server.
 For example, you may have received:
 
 ```text
@@ -17,13 +17,13 @@ In general, the name of the private server will be the same as the Jump box, wit
 Put another way, you could construct both instance names programatically as
 
 ```shell
-${REPLICATED_APP}-lab1-e6-proxy-jump
+${REPLICATED_APP}-lab6-proxy-jump
 ```
 
 and
 
 ```shell
-${REPLICATED_APP}-lab1-e6-proxy
+${REPLICATED_APP}-lab6-proxy
 ```
 
 An HTTP proxy has been provisioned to be shared by all lab participants. 
@@ -41,7 +41,7 @@ To start, let's SSH via jump box and explore our server in the private network.
 ```shell
 export REPLICATED_APP=... # your app slug
 export JUMP_BOX_IP=...
-ssh -J ${JUMP_BOX_IP} ${REPLICATED_APP}-lab1-e6-proxy 
+ssh -J ${JUMP_BOX_IP} ${REPLICATED_APP}-lab6-proxy 
 ```
 
 You'll note that egress is not possible by typical means
@@ -106,7 +106,7 @@ First we'll get the kurl install script for our channel. From your workstation:
 ```shell
 export REPLICATED_APP=...
 export REPLICATED_API_TOKEN=...
-replicated channel inspect lab1-e6-proxy
+replicated channel inspect lab6-proxy
 ```
 
 Grab the install script from the `EMBEDDED` section.
@@ -155,11 +155,11 @@ the `kotsadm` deployment.
 As we did in the airgap scenario, we'll open two SSH tunnels to access the admin console and the app.
 
 ```shell
-ssh -vNL 8800:${REPLICATED_APP}-lab1-e6-proxy:8800 ${JUMP_BOX_IP}
+ssh -vNL 8800:${REPLICATED_APP}-lab6-proxy:8800 ${JUMP_BOX_IP}
 ```
 
 ```shell
-ssh -vNL 8888:${REPLICATED_APP}-lab1-e6-proxy:8888 ${JUMP_BOX_IP}
+ssh -vNL 8888:${REPLICATED_APP}-lab6-proxy:8888 ${JUMP_BOX_IP}
 ```
 
 From here, we can explore a few last things about our environment

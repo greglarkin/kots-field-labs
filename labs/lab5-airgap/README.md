@@ -41,13 +41,13 @@ In general, the name of the private server will be the same as the Jump box, wit
 Put another way, you could construct both instance names programatically as
 
 ```shell
-${REPLICATED_APP}-lab1-e5-airgap-jump
+${REPLICATED_APP}-lab5-airgap-jump
 ```
 
 and
 
 ```shell
-${REPLICATED_APP}-lab1-e5-airgap
+${REPLICATED_APP}-lab5-airgap
 ```
 
 ### Connecting
@@ -62,7 +62,7 @@ export REPLICATED_APP=... # your app slug
 Next, you can ssh the airgapped server with
 
 ```shell
-ssh -J dex@${JUMP_BOX_IP} dex@${REPLICATED_APP}-lab1-e5-airgap
+ssh -J dex@${JUMP_BOX_IP} dex@${REPLICATED_APP}-lab5-airgap
 ```
 
 Once you're on, you can verify that the server indeed does not have internet access. Once you're convinced, you 
@@ -172,7 +172,7 @@ dex@dx411-dex-lab1-e5-airgap-jump ~$ ssh dx411-dex-lab1-e5-airgap
 Otherwise, you can use the above 
 
 ```shell
-ssh -J ${JUMP_BOX_IP} ${REPLICATED_APP}-lab1-e5-airgap
+ssh -J ${JUMP_BOX_IP} ${REPLICATED_APP}-lab5-airgap
 ```
 
 Once you're on the "airgapped" node, untar the bundle and run the install script with the `airgap` flag.
@@ -194,7 +194,7 @@ Again we'll use `REPLICATED_APP` to construct the DNS name but you can input it 
 ```shell
 export JUMP_BOX_IP=...
 export REPLICATED_APP=... # your app slug
-ssh -vNL 8800:${REPLICATED_APP}-lab1-e5-airgap:8800 dex@${JUMP_BOX_IP}
+ssh -vNL 8800:${REPLICATED_APP}-lab5-airgap:8800 dex@${JUMP_BOX_IP}
 ```
 
 This will run in the foreground, and you wont see any output, but you can test by navigating to http://localhost:8800
@@ -235,14 +235,14 @@ So we'll need to create a new release in order to fix this.
 
 ### Deploying a new version
 
-From the `lab1-kots/lab1-e5-airgap` directory, remove the command override.
+From the `labs/lab1-e5-airgap` directory, remove the command override.
 
 
 ```diff
-diff --git a/lab1-kots/lab1-e5-airgap/manifests/nginx-deployment.yaml b/lab1-kots/lab1-e5-airgap/manifests/nginx-deployment.yaml
+diff --git a/labs/lab1-e5-airgap/manifests/nginx-deployment.yaml b/labs/lab1-e5-airgap/manifests/nginx-deployment.yaml
 index fa29e8d..3a66405 100644
---- a/lab1-kots/lab1-e5-airgap/manifests/nginx-deployment.yaml
-+++ b/lab1-kots/lab1-e5-airgap/manifests/nginx-deployment.yaml
+--- a/labs/lab1-e5-airgap/manifests/nginx-deployment.yaml
++++ b/labs/lab1-e5-airgap/manifests/nginx-deployment.yaml
 @@ -16,9 +16,6 @@ spec:
        containers:
          - name: nginx
@@ -288,7 +288,7 @@ From your workstation, run
 ```shell
 export JUMP_BOX_IP=...
 export REPLICATED_APP=... # your app slug
-ssh -vNL 8888:${REPLICATED_APP}-lab1-e5-airgap:8888 dex@${JUMP_BOX_IP}
+ssh -vNL 8888:${REPLICATED_APP}-lab5-airgap:8888 dex@${JUMP_BOX_IP}
 ```
 
 </details>
@@ -299,7 +299,7 @@ Congrats! You've installed and then upgraded an airgapped instance!
 
 As a final step, we'll review how to collect support bundles
 
-Of course, since our app is installed, we can use the command from [lab 3](../lab1-e3-support-cli):
+Of course, since our app is installed, we can use the command from [lab 3](../lab3-support-cli):
   
 ```shell
 export REPLICATED_APP=... # your app slug

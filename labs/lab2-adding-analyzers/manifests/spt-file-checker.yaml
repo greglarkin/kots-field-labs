@@ -16,7 +16,7 @@ spec:
       volumes:
         - name: lab1-config
           hostPath:
-            path: /etc/lab1-e2/
+            path: /etc/lab2/
       containers:
         - name: busybox
           image: busybox
@@ -24,7 +24,7 @@ spec:
             - sleep
             - infinity
           volumeMounts:
-            - mountPath: /etc/lab1-e2
+            - mountPath: /etc/lab2
               name: lab1-config
           resources:
             limits:

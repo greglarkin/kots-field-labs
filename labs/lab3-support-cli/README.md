@@ -236,7 +236,7 @@ W0413 15:43:50.363264   25323 warnings.go:70] storage.k8s.io/v1beta1 StorageClas
 
 **Note** -- using this technique this requires outbound internet access to pull the spec from kots.io. 
 The SupportBundle spec that is used in this case is at https://github.com/replicatedhq/kots/blob/master/support-bundle.yaml.
-In [Lab 5 - airgap](../lab1-e5-airgap) we'll learn to run this generic bundle when there is no outbound internet access.
+In [Lab 5 - airgap](../lab5-airgap) we'll learn to run this generic bundle when there is no outbound internet access.
 
 
 
